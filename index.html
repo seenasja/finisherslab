@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Finishers Lab | Striker Development & Finishing Specialist — NYC</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f5f0;
+    --accent: #e63946;
+    --accent-dark: #c1121f;
+    --gray: #2a2a2a;
+    --gray-light: #8a8a8a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--black);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 60px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(230, 57, 70, 0.15) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(230,57,70,0.4), transparent);
+  }
+
+  .hero-eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.2s;
+  }
+
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(56px, 10vw, 120px);
+    line-height: 0.92;
+    letter-spacing: -1px;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.4s;
+  }
+
+  .hero h1 span {
+    display: block;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    font-size: 18px;
+    line-height: 1.7;
+    max-width: 560px;
+    color: var(--gray-light);
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.6s;
+  }
+
+  .hero-sub strong {
+    color: var(--white);
+    font-weight: 600;
+  }
+
+  .cta-row {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.8s;
+  }
+
+  .cta-primary {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 18px 40px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: 2px solid var(--accent);
+  }
+
+  .cta-primary:hover {
+    background: transparent;
+    color: var(--accent);
+  }
+
+  .cta-secondary {
+    display: inline-block;
+    color: var(--gray-light);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 18px 24px;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    border: 2px solid transparent;
+  }
+
+  .cta-secondary:hover {
+    color: var(--white);
+  }
+
+  /* STATS BAR */
+  .stats-bar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    border-top: 1px solid rgba(255,255,255,0.08);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .stat {
+    padding: 48px 40px;
+    border-right: 1px solid rgba(255,255,255,0.08);
+    text-align: center;
+  }
+
+  .stat:last-child { border-right: none; }
+
+  .stat-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .stat-label {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gray-light);
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 100px 40px;
+  }
+
+  .section-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 5vw, 64px);
+    line-height: 1;
+    margin-bottom: 40px;
+  }
+
+  /* PHILOSOPHY */
+  .philosophy {
+    background: var(--gray);
+    position: relative;
+  }
+
+  .philosophy-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .philosophy-text {
+    font-size: 18px;
+    line-height: 1.8;
+    color: rgba(245,245,240,0.7);
+  }
+
+  .philosophy-text p { margin-bottom: 24px; }
+
+  .philosophy-text strong {
+    color: var(--white);
+    font-weight: 600;
+  }
+
+  .pillar-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .pillar {
+    padding: 32px;
+    border-left: 3px solid var(--accent);
+    background: rgba(255,255,255,0.03);
+  }
+
+  .pillar h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    margin-bottom: 8px;
+    color: var(--white);
+  }
+
+  .pillar p {
+    font-size: 15px;
+    color: var(--gray-light);
+    line-height: 1.6;
+  }
+
+  /* WHAT YOU GET */
+  .offerings {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .offering-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2px;
+    background: rgba(255,255,255,0.08);
+    margin-top: 20px;
+  }
+
+  .offering-card {
+    background: var(--black);
+    padding: 48px 36px;
+    transition: background 0.3s ease;
+  }
+
+  .offering-card:hover {
+    background: var(--gray);
+  }
+
+  .offering-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    color: rgba(230,57,70,0.3);
+    margin-bottom: 16px;
+    line-height: 1;
+  }
+
+  .offering-card h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    margin-bottom: 12px;
+  }
+
+  .offering-card p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--gray-light);
+  }
+
+  /* CREDENTIALS */
+  .credentials {
+    background: #111111;
+    position: relative;
+    overflow: hidden;
+    border-top: 1px solid rgba(230,57,70,0.2);
+    border-bottom: 1px solid rgba(230,57,70,0.2);
+  }
+
+  .credentials::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(230,57,70,0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .cred-list {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .cred-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    padding: 28px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .cred-icon {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    color: var(--accent);
+    min-width: 24px;
+    padding-top: 2px;
+  }
+
+  .cred-item p {
+    font-size: 17px;
+    line-height: 1.6;
+    color: rgba(245,245,240,0.75);
+  }
+
+  .cred-item strong {
+    color: var(--white);
+    font-weight: 600;
+  }
+
+  /* CTA SECTION */
+  .final-cta {
+    text-align: center;
+    padding: 120px 40px;
+    position: relative;
+  }
+
+  .final-cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(230,57,70,0.4), transparent);
+  }
+
+  .final-cta .section-title {
+    margin-bottom: 24px;
+  }
+
+  .final-cta p {
+    font-size: 17px;
+    color: var(--gray-light);
+    max-width: 500px;
+    margin: 0 auto 40px;
+    line-height: 1.7;
+  }
+
+  .contact-details {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    gap: 48px;
+    flex-wrap: wrap;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: var(--gray-light);
+    transition: color 0.3s ease;
+    font-size: 15px;
+  }
+
+  .contact-item:hover {
+    color: var(--white);
+  }
+
+  .contact-item svg {
+    width: 20px;
+    height: 20px;
+    fill: var(--accent);
+    flex-shrink: 0;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 32px 40px;
+    text-align: center;
+    font-size: 13px;
+    color: var(--gray-light);
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .hero { padding: 40px 24px; }
+    section { padding: 72px 24px; }
+    .philosophy-grid { grid-template-columns: 1fr; gap: 48px; }
+    .stat { padding: 32px 24px; }
+    .stat-number { font-size: 40px; }
+    .offering-grid { grid-template-columns: 1fr; }
+    .cta-row { flex-direction: column; align-items: flex-start; }
+    .contact-details { flex-direction: column; align-items: center; gap: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">NYC-Based Private Coaching</div>
+  <h1>
+    Finish Like<br>
+    <span>You Mean It.</span>
+  </h1>
+  <p class="hero-sub">
+    I'm <strong>Seena Sajadieh</strong> — an experienced soccer coach and finishing specialist who helps strikers develop the <strong>technique, composure, and killer instinct</strong> to put away their chances when it matters most.
+  </p>
+  <div class="cta-row">
+    <a href="mailto:seenasajadieh&#64;gmail.com" class="cta-primary">Book a Session</a>
+    <a href="#philosophy" class="cta-secondary">Learn My Approach ↓</a>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat">
+    <div class="stat-number">10+</div>
+    <div class="stat-label">Years Coaching</div>
+  </div>
+  <div class="stat">
+    <div class="stat-number">2</div>
+    <div class="stat-label">Programs Built as Head Coach</div>
+  </div>
+  <div class="stat">
+    <div class="stat-number">UC</div>
+    <div class="stat-label">Berkeley Psychology</div>
+  </div>
+</div>
+
+<!-- PHILOSOPHY -->
+<section class="philosophy" id="philosophy">
+  <div class="philosophy-grid">
+    <div>
+      <div class="section-label">My Approach</div>
+      <div class="section-title">The Finish Starts<br>Way Before<br>The Final Strike.</div>
+      <div class="philosophy-text">
+        <p>
+          The difference between a shot and a finish is <strong>mental</strong>. Most have the technique. The question is whether they can access it under pressure — when the crowd is loud, the defender is closing, and the moment feels too big.
+        </p>
+        <p>
+          My <strong>background in Psychology, studied at UC Berkeley</strong>, combined with years of <strong>coaching experience</strong> building successful teams means I don't just teach players how to strike a ball. I train them to be composed in the box, to make decisions faster, and to trust their preparation when it counts.
+        </p>
+      </div>
+    </div>
+    <div class="pillar-list">
+      <div class="pillar">
+        <h3>Mindset</h3>
+        <p>The foundation of everything. Building a growth mindset that embraces misses as learning, demands accountability, and fuels the hunger to keep attacking the next opportunity.</p>
+      </div>
+      <div class="pillar">
+        <h3>Vision</h3>
+        <p>Reading the goalkeeper. Recognizing space before it opens. Choosing placement over power. Making the right decision in a fraction of a second — before the ball even arrives.</p>
+      </div>
+      <div class="pillar">
+        <h3>Composure</h3>
+        <p>The mental skill that separates good strikers from great ones. Slowing the game down internally while everything around you speeds up. This is trainable.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT YOU GET -->
+<section>
+  <div class="offerings">
+    <div class="section-label">What You Get</div>
+    <div class="section-title">Every Session Is Intentional</div>
+    <div class="offering-grid">
+      <div class="offering-card">
+        <div class="offering-number">01</div>
+        <h3>Finishing Technique</h3>
+        <p>One-touch finishes, volleys, placement vs. power, finishing off both feet, composure in 1v1s with the keeper. Real technique work — not just "shoot at the goal."</p>
+      </div>
+      <div class="offering-card">
+        <div class="offering-number">02</div>
+        <h3>Movement & Positioning</h3>
+        <p>The runs that create the chance. Near post, back post, checking shoulder, timing the run to stay onside. The finish starts way before the final strike.</p>
+      </div>
+      <div class="offering-card">
+        <div class="offering-number">03</div>
+        <h3>Mental Performance</h3>
+        <p>Pre-shot routines, visualization, managing the pressure of a scoring opportunity, building the confidence to bounce back after a miss. Psychology-informed, not guesswork.</p>
+      </div>
+      <div class="offering-card">
+        <div class="offering-number">04</div>
+        <h3>Film Review & Analysis</h3>
+        <p>Every session is filmed. You'll receive your footage to review on your own, and we'll break it down together — analyzing positioning, technique, and decision-making frame by frame. Awareness accelerates development faster than repetition alone.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CREDENTIALS -->
+<section class="credentials">
+  <div class="section-label" style="text-align:center;">Why Train With Me</div>
+  <div class="section-title" style="text-align:center; margin-bottom: 56px;">Built on Real Experience</div>
+  <div class="cred-list">
+    <div class="cred-item">
+      <div class="cred-icon">→</div>
+      <p><strong>UC Berkeley Graduate (B.A. Psychology)</strong> — trained in cognitive and behavioral psychology at one of the world's top research universities, with a focus on performance, motivation, and decision-making</p>
+    </div>
+    <div class="cred-item">
+      <div class="cred-icon">→</div>
+      <p><strong>Stanford University research experience</strong> under Dr. Carol Dweck, the pioneer of growth mindset theory — a framework that directly informs how I develop players' mental approach to finishing and competition</p>
+    </div>
+    <div class="cred-item">
+      <div class="cred-icon">→</div>
+      <p><strong>UCSF research experience</strong> — additional research background in behavioral science, deepening my understanding of effective learning</p>
+    </div>
+    <div class="cred-item">
+      <div class="cred-icon">→</div>
+      <p><strong>Head Varsity Boys Soccer Coach</strong> at multiple high schools across California and New York — built successful programs and coached forwards who scored at the highest levels of high school competition</p>
+    </div>
+    <div class="cred-item">
+      <div class="cred-icon">→</div>
+      <p><strong>Developed multiple double-digit goal scorers</strong> at the varsity level through intentional striker-specific training integrated into team environments</p>
+    </div>
+    <div class="cred-item">
+      <div class="cred-icon">→</div>
+      <p><strong>Coached within the MLK Jr. HS soccer program</strong> — NYC's most successful public school soccer program with 21 city championships and a nationally recognized track record</p>
+    </div>
+    <div class="cred-item">
+      <div class="cred-icon">→</div>
+      <p><strong>US Soccer D License holder</strong> pursuing C License — committed to continuous development as a coach and educator</p>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <div class="section-title">Ready to Become<br>More Clinical?</div>
+  <p>
+    Individual and small group sessions available in NYC. Serious players looking to take their finishing to the next level — let's work.
+  </p>
+  <a href="mailto:seenasajadieh&#64;gmail.com" class="cta-primary">Get In Touch</a>
+  <div class="contact-details">
+    <a href="mailto:seenasajadieh&#64;gmail.com" class="contact-item">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+      seenasajadieh&#64;gmail.com
+    </a>
+    <a href="https://instagram.com/coach.seena" target="_blank" class="contact-item">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg>
+      @coach.seena
+    </a>
+  </div>
+</section>
+
+<footer>
+  &copy; 2026 Finishers Lab. All rights reserved.
+</footer>
+
+</body>
+</html>
